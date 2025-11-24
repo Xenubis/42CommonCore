@@ -6,13 +6,13 @@
 /*   By: mmusquer <mmusquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/17 16:28:45 by mmusquer          #+#    #+#             */
-/*   Updated: 2025/11/18 12:16:32 by mmusquer         ###   ########.fr       */
+/*   Updated: 2025/11/18 16:00:01 by mmusquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "ft_printf.h"
 
-static int	ptr_base(unsigned long n)
+static int	ptr_base(unsigned long long n)
 {
 	char	*base;
 	int		count;
@@ -25,7 +25,7 @@ static int	ptr_base(unsigned long n)
 	return (count);
 }
 
-int	ft_print_ptr(unsigned long ptr)
+int	ft_print_ptr(unsigned long long ptr)
 {
 	int	count;
 
