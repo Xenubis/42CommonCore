@@ -1,0 +1,30 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   ft_rrange.c                                        :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: mmusquer <mmusquer@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2025/12/10 16:43:52 by mmusquer          #+#    #+#             */
+/*   Updated: 2025/12/10 16:44:27 by mmusquer         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+int	ft_range(int start, int end)
+{
+	int	*range;
+	int i;
+	
+	i = 0;
+	if (start > end)
+		range = (int *)malloc(sizeof(int) * (start - end) + 1);
+	else
+		range = (int *)malloc(sizeof(int) * (end - start) + 1);
+	while (start != end)
+	{
+		range[i++] = end;
+		end -= (start > end) ? -1 : 1;
+	}
+	range[i] = end;
+	return (range);
+}
