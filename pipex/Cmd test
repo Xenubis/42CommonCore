@@ -1,0 +1,22 @@
+test1 : 
+Hello World
+Bonjour le monde
+Hello again
+test line
+another test line
+
+< test1.txt cat | grep Hello > expected.txt
+./pipex test1.txt "cat" "grep Hello" result.txt
+diff expected.txt result.txt
+
+< test1.txt cat | wc -l > expected.txt
+./pipex test1.txt "cat" "wc -l" result.txt
+diff expected.txt result.txt
+
+< test1.txt cat | grep test > expected.txt
+./pipex test1.txt "cat" "grep test" result.txt
+diff expected.txt result.txt
+
+< empty.txt cat | wc -l > expected.txt
+./pipex empty.txt "cat" "wc -l" result.txt
+diff expected.txt result.txt

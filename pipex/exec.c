@@ -6,7 +6,7 @@
 /*   By: mmusquer <mmusquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 15:57:26 by mmusquer          #+#    #+#             */
-/*   Updated: 2026/01/05 16:22:18 by mmusquer         ###   ########.fr       */
+/*   Updated: 2026/01/05 17:37:02 by mmusquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@ char	**split_cmd(char *cmd)
 	args = ft_split(cmd, ' ');
 	if (!args || !args[0])
 	{
+		if (args)
+			free(args);
 		write(2, "Error: split fail", 17);
 		exit(127);
 	}

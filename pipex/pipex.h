@@ -6,14 +6,14 @@
 /*   By: mmusquer <mmusquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 11:48:01 by mmusquer          #+#    #+#             */
-/*   Updated: 2025/12/22 19:11:42 by mmusquer         ###   ########.fr       */
+/*   Updated: 2026/01/05 17:31:32 by mmusquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
-# include "libft/libft.h"
+# include "libft_pipex/libft.h"
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>

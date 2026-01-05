@@ -6,7 +6,7 @@
 #    By: mmusquer <mmusquer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/05 17:59:58 by mmusquer          #+#    #+#              #
-#    Updated: 2025/12/22 18:02:31 by mmusquer         ###   ########.fr        #
+#    Updated: 2026/01/05 18:05:37 by mmusquer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = pipex
 BONUS_NAME = pipex_bonus
 CC = gcc
 CFLAGS = -Wall -Wextra -Werror
-LIBFT_DIR = libft
+LIBFT_DIR = libft_pipex
 LIBFT = ${LIBFT_DIR}/libft.a
 INCLUDES = -I${LIBFT_DIR}
 
