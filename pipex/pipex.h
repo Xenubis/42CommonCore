@@ -6,7 +6,7 @@
 /*   By: mmusquer <mmusquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 11:48:01 by mmusquer          #+#    #+#             */
-/*   Updated: 2025/12/22 17:35:09 by mmusquer         ###   ########.fr       */
+/*   Updated: 2025/12/22 19:11:42 by mmusquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,9 @@
 # include <sys/types.h>
 # include <sys/wait.h>
 # include <unistd.h>
+
+void	setup(int ac, char **av, int *files, int fd[2]);
+void	run_child(int fd[2], int *files, char **av, char **envp);
 
 char	**split_cmd(char *cmd);
 char	*get_path(char **envp);

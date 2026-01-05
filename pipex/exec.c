@@ -6,7 +6,7 @@
 /*   By: mmusquer <mmusquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 15:57:26 by mmusquer          #+#    #+#             */
-/*   Updated: 2025/12/22 17:35:28 by mmusquer         ###   ########.fr       */
+/*   Updated: 2026/01/05 16:22:18 by mmusquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,17 @@ char	**split_cmd(char *cmd)
 {
 	char	**args;
 
-	if (!cmd)
-		error_end("Command not found");
+	if (!cmd || cmd[0] == '\0')
+	{
+		write(2, "Error: Command", 14);
+		exit(127);
+	}
 	args = ft_split(cmd, ' ');
-	if (!args)
-		error_end("malloc error");
+	if (!args || !args[0])
+	{
+		write(2, "Error: split fail", 17);
+		exit(127);
+	}
 	return (args);
 }
 
@@ -76,7 +82,8 @@ void	exec_cmd(char *cmd, char **envp)
 	if (!path)
 	{
 		free_tab(args);
-		error_end("Command not found");
+		write(2, "Command not found", 17);
+		exit(127);
 	}
 	execve(path, args, envp);
 	perror("error execve");

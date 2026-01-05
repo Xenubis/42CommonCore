@@ -1,31 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   child.c                                            :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmusquer <mmusquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/15 14:25:46 by mmusquer          #+#    #+#             */
-/*   Updated: 2026/01/05 14:30:32 by mmusquer         ###   ########.fr       */
+/*   Created: 2025/11/10 16:53:00 by mmusquer          #+#    #+#             */
+/*   Updated: 2025/11/11 15:31:25 by mmusquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	child1(int *fd, int infiles, char *cmd, char **envp)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	dup2(infiles, STDIN_FILENO);
-	close(infiles);
-	dup2(fd[1], STDOUT_FILENO);
-	close_fd(fd);
-	exec_cmd(cmd, envp);
-}
+	char	*dst;
+	size_t	i;
+	size_t	j;
 
-void	child2(int *fd, int outfiles, char *cmd, char **envp)
-{
-	dup2(fd[0], STDIN_FILENO);
-	dup2(outfiles, STDOUT_FILENO);
-	close(outfiles);
-	close_fd(fd);
-	exec_cmd(cmd, envp);
+	i = 0;
+	j = 0;
+	dst = malloc(sizeof(char) * (ft_strlen(s1) + ft_strlen(s2) + 1));
+	if (!dst)
+		return (NULL);
+	while (s1[i])
+	{
+		dst[i] = s1[i];
+		i++;
+	}
+	while (s2[j])
+	{
+		dst[i + j] = s2[j];
+		j++;
+	}
+	dst[j + i] = '\0';
+	return (dst);
 }

@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   child.c                                            :+:      :+:    :+:   */
+/*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmusquer <mmusquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/15 14:25:46 by mmusquer          #+#    #+#             */
-/*   Updated: 2026/01/05 14:30:32 by mmusquer         ###   ########.fr       */
+/*   Created: 2025/11/11 11:47:32 by mmusquer          #+#    #+#             */
+/*   Updated: 2025/12/22 12:20:50 by mmusquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#ifndef LIBFT_H
+# define LIBFT_H
 
-void	child1(int *fd, int infiles, char *cmd, char **envp)
-{
-	dup2(infiles, STDIN_FILENO);
-	close(infiles);
-	dup2(fd[1], STDOUT_FILENO);
-	close_fd(fd);
-	exec_cmd(cmd, envp);
-}
+# include <stdint.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <string.h>
+# include <unistd.h>
 
-void	child2(int *fd, int outfiles, char *cmd, char **envp)
-{
-	dup2(fd[0], STDIN_FILENO);
-	dup2(outfiles, STDOUT_FILENO);
-	close(outfiles);
-	close_fd(fd);
-	exec_cmd(cmd, envp);
-}
+size_t	ft_strlen(const char *str);
+int		ft_strncmp(const char *s1, const char *s2, size_t len);
+char	*ft_strjoin(char const *s1, char const *s2);
+char	**ft_split(char const *s, char c);
+char	*ft_strdup(char *src);
+char	*ft_strchr(const char *str, int c);
+
+#endif

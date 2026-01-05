@@ -6,16 +6,19 @@
 /*   By: mmusquer <mmusquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 11:47:40 by mmusquer          #+#    #+#             */
-/*   Updated: 2025/12/22 19:03:43 by mmusquer         ###   ########.fr       */
+/*   Updated: 2026/01/05 16:15:10 by mmusquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	setup(int ac, char **av, int *files, int fd[2])
+void	setup(int ac, char **av, int *files, int *fd)
 {
 	if (ac != 5)
-		error_end("Usage : infile cmd1 cmd2 outfile");
+	{
+		write(2, "Usage: infile cmd1 cmd2 outfile", 31);
+		exit(EXIT_FAILURE);
+	}
 	files[0] = open_fd_infile(av[1], O_RDONLY);
 	if (files[0] == -1)
 	{
@@ -29,10 +32,11 @@ void	setup(int ac, char **av, int *files, int fd[2])
 		error_end("error pipe");
 }
 
-void	run_child(int fd[2], int *files, char *av, char **envp)
+void	run_child(int *fd, int *files, char **av, char **envp)
 {
 	pid_t	pid1;
 	pid_t	pid2;
+	int		status;
 
 	pid1 = fork();
 	if (pid1 < 0)
@@ -49,8 +53,11 @@ void	run_child(int fd[2], int *files, char *av, char **envp)
 	close(files[1]);
 	if (waitpid(pid1, NULL, 0) < 0)
 		perror("waitpid pid1");
-	if (waitpid(pid2, NULL, 0) < 0)
+	if (waitpid(pid2, &status, 0) < 0)
 		perror("waitpid pid2");
+	if (WIFEXITED(status))
+		exit(WEXITSTATUS(status));
+	exit(EXIT_FAILURE);
 }
 
 int	main(int ac, char **av, char **envp)
@@ -58,8 +65,6 @@ int	main(int ac, char **av, char **envp)
 	int	files[2];
 	int	fd[2];
 
-	if (ac != 4)
-		error_end("Pipe use : infile cmd1 | cmd2 outfile");
 	setup(ac, av, files, fd);
 	run_child(fd, files, av, envp);
 	return (0);

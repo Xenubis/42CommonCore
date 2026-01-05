@@ -1,31 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   child.c                                            :+:      :+:    :+:   */
+/*   ft_strchr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: mmusquer <mmusquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/12/15 14:25:46 by mmusquer          #+#    #+#             */
-/*   Updated: 2026/01/05 14:30:32 by mmusquer         ###   ########.fr       */
+/*   Created: 2025/11/10 10:39:35 by mmusquer          #+#    #+#             */
+/*   Updated: 2025/11/12 16:34:10 by mmusquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "libft.h"
 
-void	child1(int *fd, int infiles, char *cmd, char **envp)
+char	*ft_strchr(const char *str, int c)
 {
-	dup2(infiles, STDIN_FILENO);
-	close(infiles);
-	dup2(fd[1], STDOUT_FILENO);
-	close_fd(fd);
-	exec_cmd(cmd, envp);
-}
+	size_t	i;
 
-void	child2(int *fd, int outfiles, char *cmd, char **envp)
-{
-	dup2(fd[0], STDIN_FILENO);
-	dup2(outfiles, STDOUT_FILENO);
-	close(outfiles);
-	close_fd(fd);
-	exec_cmd(cmd, envp);
+	i = 0;
+	while (str[i])
+	{
+		if (str[i] == (char)c)
+			break ;
+		i++;
+	}
+	if ((str[i] == (char)c))
+		return ((char *)str + i);
+	return (NULL);
 }
