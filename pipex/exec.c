@@ -6,7 +6,7 @@
 /*   By: mmusquer <mmusquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/12/15 15:57:26 by mmusquer          #+#    #+#             */
-/*   Updated: 2026/01/05 17:37:02 by mmusquer         ###   ########.fr       */
+/*   Updated: 2026/01/06 16:37:33 by mmusquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,18 @@ char	*get_path(char **envp)
 	return (NULL);
 }
 
+char	*slash(char *cmd)
+{
+	int i;
+
+	i = ft_strlen(cmd);
+	while (i > 0 && cmd[i] != '/')
+	{
+		i--;
+	}
+	return (cmd + i);
+}
+
 char	*find_cmd_path(char *cmd, char **envp)
 {
 	char	**paths;
@@ -54,6 +66,7 @@ char	*find_cmd_path(char *cmd, char **envp)
 	int		i;
 
 	i = 0;
+	cmd = slash(cmd);
 	paths = ft_split(get_path(envp), ':');
 	if (!paths)
 		return (NULL);
