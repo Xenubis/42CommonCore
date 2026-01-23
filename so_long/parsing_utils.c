@@ -6,7 +6,7 @@
 /*   By: mmusquer <mmusquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 15:22:10 by mmusquer          #+#    #+#             */
-/*   Updated: 2026/01/22 16:36:06 by mmusquer         ###   ########.fr       */
+/*   Updated: 2026/01/23 16:54:20 by mmusquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,18 +49,18 @@ void	check_wall(t_game *para)
 	while (i < para->width)
 	{
 		if (para->map[0][i] != '1')
-			error_end("Error : map invalide\n", para);
+			error_end("Error : map invalid\n", para);
 		if (para->map[para->height - 1][i] != '1')
-			error_end("Error : map invalide\n", para);
+			error_end("Error : map invalid\n", para);
 		i++;
 	}
 	i = 1;
 	while (i <= (para->height - 2))
 	{
 		if (para->map[i][0] != '1')
-			error_end("Error : map invalide\n", para);
+			error_end("Error : map invalid\n", para);
 		if (para->map[i][para->width - 1] != '1')
-			error_end("Error : map invalide\n", para);
+			error_end("Error : map invalid\n", para);
 		i++;
 	}
 }

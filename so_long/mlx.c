@@ -6,7 +6,7 @@
 /*   By: mmusquer <mmusquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 11:42:33 by mmusquer          #+#    #+#             */
-/*   Updated: 2026/01/23 16:21:47 by mmusquer         ###   ########.fr       */
+/*   Updated: 2026/01/23 16:47:06 by mmusquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,7 @@ int	end_game(t_game *para)
 	mlx_destroy_image(para->mlx, para->img_minish_left);
 	mlx_destroy_image(para->mlx, para->img_minish_right);
 	mlx_destroy_image(para->mlx, para->img_minish_up);
+	mlx_destroy_image(para->mlx, para->img_minish_exit);
 	mlx_destroy_window(para->mlx, para->window);
 	free_tab(para->map);
 	mlx_destroy_display(para->mlx);
