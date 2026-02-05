@@ -6,33 +6,32 @@
 /*   By: mmusquer <mmusquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/11 11:47:32 by mmusquer          #+#    #+#             */
-/*   Updated: 2026/01/22 17:25:25 by mmusquer         ###   ########.fr       */
+/*   Updated: 2026/01/27 13:52:34 by mmusquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include <stdint.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>
-# include <stdint.h>
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
 # endif
 
 /*GNL*/
-char	*get_next_line(int fd);
-int		ft_strlen_gnl(char *s);
-char	*ft_strjoin_gnl(char *s1, char *s2);
-char	*do_gnl1(int fd, char *stash, char *buffer);
-char	*extract(char *stash);
-char	*clean(char *stash);
-int		new_line(char *str);
-char	*clean_bis(char *stash, int i);
-
+char				*get_next_line(int fd);
+int					ft_strlen_gnl(char *s);
+char				*ft_strjoin_gnl(char *s1, char *s2);
+char				*do_gnl1(int fd, char *stash, char *buffer);
+char				*extract(char *stash);
+char				*clean(char *stash);
+int					new_line(char *str);
+char				*clean_bis(char *stash, int i);
 
 /*Functions in column*/
 int					ft_isalpha(int i);

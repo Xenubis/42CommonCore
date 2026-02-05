@@ -6,7 +6,7 @@
 /*   By: mmusquer <mmusquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/22 11:42:33 by mmusquer          #+#    #+#             */
-/*   Updated: 2026/01/23 16:47:06 by mmusquer         ###   ########.fr       */
+/*   Updated: 2026/01/29 13:07:56 by mmusquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,33 +29,65 @@ void	mlx_create_img(t_game *para)
 {
 	mlx_create_add(para);
 	mlx_create_caracter(para);
-	if (!(para->img_collectible) || !(para->img_exit) || !(para->img_floor)
-		|| !(para->img_wall) || !(para->img_minish_down)
-		|| !(para->img_minish_left) || !(para->img_minish_right)
-		|| !(para->img_minish_up))
+	mlx_create_caracter2(para);
+	if (!(para->img_collectible[0]) || !(para->img_exit) || !(para->img_floor)
+		|| !(para->img_wall) || !(para->img_minish_down[0])
+		|| !(para->img_minish_down[1]) || !(para->img_minish_down[2])
+		|| !(para->img_minish_exit[0]) || !(para->img_minish_exit[1])
+		|| !(para->img_minish_exit[2]) || !(para->img_minish_up[0])
+		|| !(para->img_minish_up[1]) || !(para->img_minish_up[2])
+		|| !(para->img_minish_left[0]) || !(para->img_minish_left[1])
+		|| !(para->img_minish_left[2]) || !(para->img_minish_right[0])
+		|| !(para->img_minish_right[1]) || !(para->img_minish_right[2])
+		|| !(para->img_monster[0]) || !(para->img_monster[1])
+		|| !(para->img_monster[2]) || !(para->img_collectible[1]) \
+		|| !(para->img_collectible[2]) || !(para->img_collectible[3]))
 		error_end("Error : loading image\n", para);
 }
 
-static void	display_map_exec(t_game *para, int x, int y)
+void	display_map_exec(t_game *para, int x, int y)
 {
 	if (para->map[y][x] == '1')
 		mlx_put_image_to_window(para->mlx, para->window, para->img_wall, x
-				* TILE_SIZE, y * TILE_SIZE);
+			* TILE_SIZE, y * TILE_SIZE);
 	else if (para->map[y][x] == '0')
 		mlx_put_image_to_window(para->mlx, para->window, para->img_floor, x
-				* TILE_SIZE, y * TILE_SIZE);
+			* TILE_SIZE, y * TILE_SIZE);
 	else if (para->map[y][x] == 'P' && para->on_exit == 1)
-		mlx_put_image_to_window(para->mlx, para->window, para->img_minish_exit, x
-				* TILE_SIZE, y * TILE_SIZE);
+		mlx_put_image_to_window(para->mlx, para->window,
+			para->img_minish_exit[para->order[para->current_frame % 8]], x
+			* TILE_SIZE, y * TILE_SIZE);
 	else if (para->map[y][x] == 'E')
 		mlx_put_image_to_window(para->mlx, para->window, para->img_exit, x
-				* TILE_SIZE, y * TILE_SIZE);
+			* TILE_SIZE, y * TILE_SIZE);
 	else if (para->map[y][x] == 'P')
-		mlx_put_image_to_window(para->mlx, para->window, para->img_minish_down,
-				x * TILE_SIZE, y * TILE_SIZE);
+		sprite_dir(para, x, y);
 	else if (para->map[y][x] == 'C')
-		mlx_put_image_to_window(para->mlx, para->window, para->img_collectible,
-				x * TILE_SIZE, y * TILE_SIZE);
+		mlx_put_image_to_window(para->mlx, para->window,
+			para->img_collectible[para->orderc[para->current_frame % 6]], x
+			* TILE_SIZE, y * TILE_SIZE);
+	else if (para->map[y][x] == 'M')
+		mlx_put_image_to_window(para->mlx, para->window,
+			para->img_monster[para->order[para->current_frame % 8]], x
+			* TILE_SIZE, y * TILE_SIZE);
+}
+
+void	sprite_dir(t_game *para, int x, int y)
+{
+	int		frame;
+	void	*sprite;
+
+	frame = para->order[para->current_frame % 8];
+	if (para->player_dir == LOOK_DOWN)
+		sprite = para->img_minish_down[frame];
+	else if (para->player_dir == LOOK_UP)
+		sprite = para->img_minish_up[frame];
+	else if (para->player_dir == LOOK_LEFT)
+		sprite = para->img_minish_left[frame];
+	else
+		sprite = para->img_minish_right[frame];
+	mlx_put_image_to_window(para->mlx, para->window, sprite, x * TILE_SIZE, y
+		* TILE_SIZE);
 }
 
 void	display_map(t_game *para)
@@ -70,27 +102,9 @@ void	display_map(t_game *para)
 		while (para->map[y][x])
 		{
 			display_map_exec(para, x, y);
+			display_move(para);
 			x++;
 		}
 		y++;
 	}
-}
-
-int	end_game(t_game *para)
-{
-	mlx_destroy_image(para->mlx, para->img_wall);
-	mlx_destroy_image(para->mlx, para->img_collectible);
-	mlx_destroy_image(para->mlx, para->img_exit);
-	mlx_destroy_image(para->mlx, para->img_floor);
-	mlx_destroy_image(para->mlx, para->img_minish_down);
-	mlx_destroy_image(para->mlx, para->img_minish_left);
-	mlx_destroy_image(para->mlx, para->img_minish_right);
-	mlx_destroy_image(para->mlx, para->img_minish_up);
-	mlx_destroy_image(para->mlx, para->img_minish_exit);
-	mlx_destroy_window(para->mlx, para->window);
-	free_tab(para->map);
-	mlx_destroy_display(para->mlx);
-	free(para->mlx);
-	exit(0);
-	return (0);
 }

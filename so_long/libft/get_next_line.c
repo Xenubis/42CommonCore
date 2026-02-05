@@ -6,7 +6,7 @@
 /*   By: mmusquer <mmusquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/11/19 11:36:54 by mmusquer          #+#    #+#             */
-/*   Updated: 2026/01/22 17:48:05 by mmusquer         ###   ########.fr       */
+/*   Updated: 2026/01/27 13:02:19 by mmusquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,6 +114,15 @@ char	*get_next_line(int fd)
 	char		*line;
 	char		*buffer;
 
+	if (fd == -1)
+	{
+		if (stash)
+		{
+			free(stash);
+			stash = NULL;
+		}
+		return (NULL);
+	}
 	if (fd < 0 || BUFFER_SIZE <= 0)
 		return (NULL);
 	buffer = malloc((BUFFER_SIZE + 1));

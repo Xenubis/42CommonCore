@@ -6,7 +6,7 @@
 /*   By: mmusquer <mmusquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/20 15:18:43 by mmusquer          #+#    #+#             */
-/*   Updated: 2026/01/23 15:37:28 by mmusquer         ###   ########.fr       */
+/*   Updated: 2026/02/02 14:29:05 by mmusquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,11 @@ void	error_end(char *msg, t_game *para)
 {
 	t_list	*tmp;
 
+	if (para->mlx != NULL)
+	{
+		write(2, msg, (ft_strlen(msg)));
+		end_game(para);
+	}
 	if (para->stock_map != NULL && para->map == NULL)
 	{
 		while (para->stock_map)
@@ -30,9 +35,7 @@ void	error_end(char *msg, t_game *para)
 	{
 		free_tab(para->map);
 		if (para->stock_map != NULL)
-		{
 			free_lst(para);
-		}
 	}
 	write(2, msg, (ft_strlen(msg)));
 	exit(EXIT_FAILURE);
@@ -47,8 +50,13 @@ void	free_tab(char **tab)
 		return ;
 	while (tab[i])
 	{
-		free(tab[i]);
 		i++;
+	}
+	i--;
+	while (i >= 0)
+	{
+		free(tab[i]);
+		i--;
 	}
 	free(tab);
 }
@@ -63,4 +71,27 @@ void	free_lst(t_game *para)
 		free(para->stock_map);
 		para->stock_map = tmp;
 	}
+}
+
+int	end_game(t_game *para)
+{
+	destroy_minish(para);
+	if (para->window)
+		mlx_destroy_window(para->mlx, para->window);
+	if (para->map)
+		free_tab(para->map);
+	if (para->mlx)
+	{	
+		mlx_destroy_display(para->mlx);
+		free(para->mlx);
+	}
+	exit(0);
+	return (0);
+}
+
+void	destroy_minish(t_game *para)
+{
+	destroy1(para);
+	destroy2(para);
+	destroy3(para);
 }

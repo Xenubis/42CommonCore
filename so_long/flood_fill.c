@@ -6,7 +6,7 @@
 /*   By: mmusquer <mmusquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/01/21 16:55:12 by mmusquer          #+#    #+#             */
-/*   Updated: 2026/01/22 17:26:54 by mmusquer         ###   ########.fr       */
+/*   Updated: 2026/01/27 14:46:07 by mmusquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,10 @@ static char	**copy_map(char **map_cpy, int height)
 	{
 		tmp[i] = ft_strdup(map_cpy[i]);
 		if (!tmp[i])
+		{
+			free_tab(tmp);
 			return (NULL);
+		}
 		i++;
 	}
 	tmp[i] = NULL;

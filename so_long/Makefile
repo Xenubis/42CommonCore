@@ -6,20 +6,20 @@
 #    By: mmusquer <mmusquer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/11/05 17:59:58 by mmusquer          #+#    #+#              #
-#    Updated: 2026/01/23 16:07:35 by mmusquer         ###   ########.fr        #
+#    Updated: 2026/01/27 13:04:14 by mmusquer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = so_long
 CC = gcc 
-CFLAGS = -Wall -Wextra -Werror -g
+CFLAGS = -Wall -Wextra -Werror -g3
 LIBFT_DIR = libft
 LIBFT = ${LIBFT_DIR}/libft.a
 MLX_DIR = Minilibx/minilibx-linux
 MLX = ${MLX_DIR}/libmlx.a
 INCLUDES = -I${LIBFT_DIR} -I${MLX_DIR}
 
-SRCS = main.c flood_fill.c parsing_utils.c parsing.c mlx.c key.c movement.c utils_graph.c utils_mlx.c utils.c
+SRCS = main.c flood_fill.c parsing_utils.c parsing.c mlx.c key.c movement.c movement2.c utils_graph.c utils_destroy.c utils_mlx.c utils.c
 
 OBJS = ${SRCS:.c=.o}
 
