@@ -94,7 +94,7 @@ void	permute(t_city *cities, int *path, int start, int n, float *min)
 int	main(void)
 {
 	t_city cities[11];
-	int	path[12];
+	int	path[11];
 	int n;
 	float min;
 

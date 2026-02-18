@@ -6,9 +6,9 @@ int	is_safe(int *board, int col, int row)
 	int i;
 
 	i = 0;
-	while (i <col)
+	while (i < col)
 	{
-		if (board[i] == row || board[i] - i == row - col || board[i] + i == row +col)
+		if (board[i] == row || board[i] - i == row - col || board[i] + i == row + col)
 			return (0);
 		i++;
 	}
