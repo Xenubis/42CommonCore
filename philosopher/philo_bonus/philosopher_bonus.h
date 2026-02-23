@@ -6,7 +6,7 @@
 /*   By: mmusquer <mmusquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 14:45:21 by mmusquer          #+#    #+#             */
-/*   Updated: 2026/02/20 14:12:08 by mmusquer         ###   ########.fr       */
+/*   Updated: 2026/02/23 18:14:55 by mmusquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,11 +25,14 @@
 # include <sys/wait.h>
 # include <unistd.h>
 
+# define ROUGE
+
 typedef struct z_philo
 {
 	int				id;
 	long			last_bite;
 	int				nb_bite;
+	int				he_dead;
 
 	pthread_t		thread;
 	pid_t			pid;
@@ -50,7 +53,8 @@ typedef struct s_data
 	sem_t			*fork;
 	sem_t			*sit;
 	sem_t			*print;
-	pthread_mutex_t	bite_mutex;
+	sem_t			*bite;
+	sem_t			*death;
 
 	t_philo			*philos;
 }					t_data;
@@ -88,5 +92,13 @@ void				*grim_reaper(void *args);
 void				error_end(char *msg);
 int					ft_strlen(char *str);
 void				destroy_semaphore(t_data *data);
+void				end_fork(t_philo *philo);
+
+/*LOCKER*/
+
+long				check_last_bite(t_philo *philo);
+int					lock_nb_bite_need(t_philo *philo);
+int					lock_nb_bite(t_philo *philo);
+int					is_dead(t_philo *philo);
 
 #endif

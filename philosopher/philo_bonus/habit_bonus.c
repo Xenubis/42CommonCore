@@ -6,11 +6,19 @@
 /*   By: mmusquer <mmusquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 17:20:57 by mmusquer          #+#    #+#             */
-/*   Updated: 2026/02/20 14:26:48 by mmusquer         ###   ########.fr       */
+/*   Updated: 2026/02/23 18:21:16 by mmusquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philosopher_bonus.h"
+
+static void	fork_to_bite(t_philo *philo)
+{
+	take_fork(philo);
+	take_fork(philo);
+	take_bite(philo);
+	put_down_fork(philo);
+}
 
 static void	check_delay_time(t_philo *philo)
 {
@@ -35,37 +43,48 @@ void	*grim_reaper(void *args)
 	philo = (t_philo *)args;
 	while (1)
 	{
-		pthread_mutex_lock(&philo->data->bite_mutex);
-		if (get_time() - philo->last_bite > philo->data->time_to_die)
+		if (lock_nb_bite(philo) == lock_nb_bite_need(philo))
+			break ;
+		if (check_last_bite(philo) > philo->data->time_to_die)
 		{
-			pthread_mutex_unlock(&philo->data->bite_mutex);
 			sem_wait(philo->data->print);
-			printf("%ld ms Philosopher %d is dead\n", (get_time()
-					- philo->data->starting_time), philo->id);
-			exit (1);
+			printf("\033[31;01m%ld ms Philosopher %d is dead\033[00m\n",
+				(get_time() - philo->data->starting_time), philo->id);
+			sem_wait(philo->data->death);
+			philo->he_dead = 1;
+			sem_post(philo->data->death);
+			sem_post(philo->data->bite);
+			sem_post(philo->data->sit);
+			sem_post(philo->data->fork);
+			break ;
 		}
-		pthread_mutex_unlock(&philo->data->bite_mutex);
 		ft_usleep(2);
 	}
+	return (NULL);
 }
 
 void	habit(t_philo *philo)
 {
-	pthread_mutex_init(&philo->data->bite_mutex, NULL);
 	pthread_create(&philo->thread, NULL, grim_reaper, philo);
-	pthread_detach(philo->thread);
 	check_delay_time(philo);
 	while (1)
 	{
+		if (is_dead(philo) == 1)
+		{
+			end_fork(philo);
+			exit(1);
+		}
 		sem_wait(philo->data->sit);
-		take_fork(philo);
-		take_fork(philo);
-		take_bite(philo);
-		put_down_fork(philo);
+		fork_to_bite(philo);
 		sem_post(philo->data->sit);
+		sem_wait(philo->data->bite);
 		philo->nb_bite++;
-		if (philo->nb_bite == philo->data->nb_bite_need)
+		sem_post(philo->data->bite);
+		if (lock_nb_bite(philo) == lock_nb_bite_need(philo))
+		{
+			end_fork(philo);
 			exit(0);
+		}
 		sleeping(philo);
 		think(philo);
 	}

@@ -6,7 +6,7 @@
 /*   By: mmusquer <mmusquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/18 14:18:12 by mmusquer          #+#    #+#             */
-/*   Updated: 2026/02/20 14:21:11 by mmusquer         ###   ########.fr       */
+/*   Updated: 2026/02/23 17:09:41 by mmusquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ void	think(t_philo *philo)
 	if (is_dead(philo) == 1)
 		return ;
 	pthread_mutex_lock(&philo->data->print_mutex);
-	printf("%ld ms Philosopher %d is thinking\n", (get_time()
+	printf("\033[35;01m%ld ms Philosopher %d is thinking\033[00m\n", (get_time()
 			- philo->data->starting_time), philo->id);
 	pthread_mutex_unlock(&philo->data->print_mutex);
 	if (philo->data->nb_philo % 2 == 0)

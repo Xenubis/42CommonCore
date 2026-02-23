@@ -6,7 +6,7 @@
 /*   By: mmusquer <mmusquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/04 14:45:06 by mmusquer          #+#    #+#             */
-/*   Updated: 2026/02/20 14:24:16 by mmusquer         ###   ########.fr       */
+/*   Updated: 2026/02/23 18:12:14 by mmusquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,26 @@ int	ft_strlen(char *str)
 
 void	destroy_semaphore(t_data *data)
 {
+	sem_post(data->print);
 	sem_close(data->fork);
 	sem_unlink("/fork");
 	sem_close(data->print);
 	sem_unlink("/print");
 	sem_close(data->sit);
 	sem_unlink("/sit");
+	sem_close(data->bite);
+	sem_unlink("/bite");
+	sem_close(data->death);
+	sem_unlink("/death");
+}
+
+void	end_fork(t_philo *philo)
+{
+	pthread_join(philo->thread, NULL);
+	sem_close(philo->data->bite);
+	sem_close(philo->data->death);
+	sem_close(philo->data->fork);
+	sem_close(philo->data->print);
+	sem_close(philo->data->sit);
+	free(philo->data->philos);
 }

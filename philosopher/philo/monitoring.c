@@ -6,7 +6,7 @@
 /*   By: mmusquer <mmusquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 17:27:44 by mmusquer          #+#    #+#             */
-/*   Updated: 2026/02/17 17:10:51 by mmusquer         ###   ########.fr       */
+/*   Updated: 2026/02/23 17:12:14 by mmusquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	death(t_data *data, int j)
 	data->he_dead = 1;
 	pthread_mutex_unlock(&data->dead_mutex);
 	pthread_mutex_lock(&data->print_mutex);
-	printf("%ld ms Philosopher %d is dead\n", (get_time()
+	printf("\033[31;01m%ld ms Philosopher %d is dead\033[00m\n", (get_time()
 			- data->starting_time), data->philos[j].id);
 	pthread_mutex_unlock(&data->print_mutex);
 }

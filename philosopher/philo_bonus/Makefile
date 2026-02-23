@@ -6,7 +6,7 @@
 #    By: mmusquer <mmusquer@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2026/02/04 14:44:40 by mmusquer          #+#    #+#              #
-#    Updated: 2026/02/19 17:48:04 by mmusquer         ###   ########.fr        #
+#    Updated: 2026/02/23 15:18:19 by mmusquer         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ NAME = philo_bonus
 CC = cc 
 CFLAGS = -Wall -Wextra -Werror -g3 -pthread
 
-SRCS = main_bonus.c habit_bonus.c action_bonus.c init_bonus.c parsing_bonus.c time_bonus.c utils_bonus.c
+SRCS = main_bonus.c habit_bonus.c action_bonus.c init_bonus.c parsing_bonus.c locker_bonus.c time_bonus.c utils_bonus.c
 
 OBJS = ${SRCS:.c=.o}
 
