@@ -6,7 +6,7 @@
 /*   By: mmusquer <mmusquer@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/02/09 17:20:57 by mmusquer          #+#    #+#             */
-/*   Updated: 2026/02/23 17:12:53 by mmusquer         ###   ########.fr       */
+/*   Updated: 2026/02/24 13:50:33 by mmusquer         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,9 @@ static int	lonely(t_philo *philo)
 	{
 		pthread_mutex_lock(philo->left_fork);
 		pthread_mutex_lock(&philo->data->print_mutex);
-		printf("\033[34;01m%ld ms Philosopher %d has taken left fork\033[00m\n", (get_time()
-				- philo->data->starting_time), philo->id);
+		printf("\033[34;01m%ld ms Philosopher %d has taken left fork\033[00m\n",
+			(get_time() - philo->data->starting_time),
+			philo->id);
 		pthread_mutex_unlock(&philo->data->print_mutex);
 		ft_usleep(philo->data->time_to_die);
 		pthread_mutex_unlock(philo->left_fork);
