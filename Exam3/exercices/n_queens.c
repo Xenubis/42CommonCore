@@ -47,7 +47,7 @@ void solve(int *board, int n, int col)
 			board[col] = row;
 			solve(board, n, col + 1);
 		}
-		row ++;
+		row++;
 	}
 }
 

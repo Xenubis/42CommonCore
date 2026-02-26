@@ -2,16 +2,6 @@
 #include <unistd.h>
 #include <stdio.h>
 
-int	ft_strlen(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-		i++;
-	return (i);
-}
-
 void	swap(char *a, char *b)
 {
 	char	tmp;
@@ -21,26 +11,16 @@ void	swap(char *a, char *b)
 	*b = tmp;
 }
 
-void	reverse(char *str, int start, int end)
-{
-	while (start < end)
-	{
-		swap(&str[start], &str[end]);
-		start++;
-		end--;
-	}
-}
-
-void	sort(char *str, int len)
+void sort(char *str)
 {
 	int	i;
 	int	j;
 
 	i = 0;
-	while (i < len - 1)
+	while (str[i])
 	{
 		j = i + 1;
-		while (j < len)
+		while (str[j])
 		{
 			if (str[i] > str[j])
 				swap(&str[i], &str[j]);
@@ -50,46 +30,37 @@ void	sort(char *str, int len)
 	}
 }
 
-int	next_permutation(char *str, int len)
+void	permutation(char *str, int i, int len)
 {
-	int	i;
 	int	j;
 
-	i = len - 2;
-	while (i >= 0 && str[i] >= str[i + 1])
-		i--;
-	if (i < 0)
-		return (0);
-	j = len - 1;
-	while (str[j] <= str[i])
-		j--;
-	swap(&str[i], &str[j]);
-	reverse(str, i + 1, len - 1);
-	return (1);
+	if (i == len)
+	{
+		write(1, str, len);
+		write(1, "\n", 1);
+		return ;
+	}
+	j = i;
+	sort(str + i);
+	while (j < len)
+	{
+		swap(&str[i], &str[j]);
+		permutation(str, i + 1, len);
+		swap(&str[i], &str[j]);
+		j++;
+	}	
 }
 
 int	main(int ac, char **av)
 {
-	char	*permu;
-	int		len;
-	int		i;
+	int	len;
 
+	len = 0;
 	if (ac != 2)
 		return (0);
-	len = ft_strlen(av[1]);
-	permu = malloc(len + 1);
-	if (!permu)
-		return (1);
-	i = 0;
-	while (i <= len)
-	{
-		permu[i] = av[1][i];
-		i++;
-	}
-	sort(permu, len);
-	puts(permu);
-	while (next_permutation(permu, len))
-		puts(permu);
-	free(permu);
+	while (av[1][len])
+		len++;
+	sort(av[1]);
+	permutation(av[1], 0, len);
 	return (0);
 }

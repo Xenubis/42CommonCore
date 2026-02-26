@@ -3,6 +3,10 @@
 #include <fcntl.h>
 #include <stdio.h>
 
+#ifndef BUFFER_SIZE
+# define BUFFER_SIZE 42
+#endif
+
 char *get_next_line(int fd)
 {
     static char buf[BUFFER_SIZE];
@@ -14,13 +18,13 @@ char *get_next_line(int fd)
 	j = 0;
     if (fd < 0 || BUFFER_SIZE <= 0)
         return (NULL);
-    line = malloc(10000);
+    line = malloc(100000);
     if (!line)
         return (NULL);
     while (1)
     {	
         if (i >= r)
-        {
+        {	
             i = 0;
             r = read(fd, buf, BUFFER_SIZE);
             if (r <= 0)
@@ -42,4 +46,19 @@ char *get_next_line(int fd)
 	}
     line[j] = '\0';
     return (line);
+}
+
+int	main(void)
+{
+	int		fd;
+	char	*line;
+
+	fd = open("test.txt", O_RDONLY);
+	while ((line = get_next_line(fd)) != NULL)
+	{
+		printf("%s", line);
+		free(line);
+	}
+	close(fd);
+	return (0);
 }
